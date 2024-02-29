@@ -1,9 +1,9 @@
 import "./normalize.css";
 import "./App.css";
-import { useState } from "react";
+import { useState, useRef } from "react";
 
 function App() {
-  const [input, setInput] = useState("");
+  const inputRef = useRef(""); 
   const [chatlog, setchatlog] = useState([
     {
       user: "gpt",
@@ -24,8 +24,8 @@ function App() {
 
     console.log(e);
 
-    const chatlogNew = [...chatlog, { user: "me", message: `${input}` }];
-    await setInput("");
+    const chatlogNew = [...chatlog, { user: "me", message: inputRef.current.value }];
+    inputRef.current.value = "";
     setchatlog(chatlogNew);
     const messages = chatlogNew.map((message) => message.message).join("\n");
 
@@ -69,11 +69,9 @@ function App() {
       </div>
       <form onSubmit={handleSubmit} style={{position:"absolute",top:"90"+"%",left:"15"+"%",width:"75"+"%"}}>
         <input
-      
+          ref={inputRef}
           className="chat-input-textarea"
           placeholder="Type your message here"
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
         ></input>
       </form>
     </>
