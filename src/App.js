@@ -1,6 +1,6 @@
 import "./normalize.css";
 import "./App.css";
-import { useState, useRef } from "react";
+import { useState, useRef, memo } from "react";
 
 function App() {
   const inputRef = useRef(""); 
@@ -61,7 +61,7 @@ function App() {
         >
           <div className="chat-log">
             {chatlog.map((message, index) => {
-              return <ChatMessage key={index} message={message} />;
+              return <MemoChatMessage key={index} message={message} />;
             })}
           </div>
           <div className="chat-input-holder"></div>
@@ -88,4 +88,6 @@ const ChatMessage = ({ message }) => {
     </div>
   );
 };
+
+const MemoChatMessage = memo(ChatMessage);
 export default App;
